@@ -7,9 +7,9 @@ const GoalsList = () => {
 
     return (
       <ul>
-        <li><GoalItem /></li>
-        <li><GoalItem /></li>
-        <li><GoalItem /></li>
+        <li><GoalItem text='Buy cheese' special /></li>
+        <li><GoalItem text='Buy tomatoes' special /></li>
+        <li><GoalItem text='Make pizza'  /></li>
       </ul>
     );
   };

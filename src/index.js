@@ -8,9 +8,9 @@ import SearchPanel from './componets/SearchPanel';
 const App = () => {
 
   const goalsData = [
-    {text: 'Do something', special: false},
-    {text: '???', special: false},
-    {text: 'Profit', special: true}
+    {text: 'Do something', special: false, id: 1},
+    {text: '???', special: false, id: 2},
+    {text: 'Profit', special: true, id: 3}
   ]
 
   return (

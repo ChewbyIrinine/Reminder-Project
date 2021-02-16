@@ -1,19 +1,23 @@
 import React from 'react';
 
 import GoalItem from './GoalItem';
+import './GoalsList.css'
 
 const GoalsList = ({ goalsData }) => {
 
     const elements = goalsData.map((item) => {
+
+        const {id, ...itemProps} = item;
+
         return (
-            <li>
-                <GoalItem {...item}/>
+            <li key = {item.id} className="list-group-item">
+                <GoalItem {...itemProps}/>
             </li>
-        )
+        );
     });
 
     return (
-      <ul>
+      <ul className="list-group goals-list">
         {elements}
       </ul>
     );

@@ -4,20 +4,25 @@ import ReactDom from 'react-dom';
 import AppHeader from './componets/AppHeader';
 import GoalsList from './componets/GoalsList';
 import SearchPanel from './componets/SearchPanel';
+import ItemStatusFilter from './componets/ItemStatusFilter';
+
+import './index.css';
 
 const App = () => {
 
   const goalsData = [
-    {text: 'Do something', special: false, id: 1},
-    {text: '???', special: false, id: 2},
-    {text: 'Profit', special: true, id: 3}
+    { text: 'Do something', special: false, id: 1 },
+    { text: '???', special: false, id: 2 },
+    { text: 'Profit', special: true, id: 3 }
   ]
 
   return (
-    <div>
-      <span>{ (new Date()).toString() }</span>
+    <div className="goals-app">
       <AppHeader />
-      <SearchPanel />
+      <div className="top-panel d-flex">
+        <SearchPanel />
+        <ItemStatusFilter />
+      </div>
       <GoalsList goalsData={goalsData} />
     </div>
   );

@@ -10,7 +10,7 @@ const GoalsList = ({ goalsData }) => {
         const {id, ...itemProps} = item;
 
         return (
-            <li key = {item.id} className="list-group-item">
+            <li key = {id} className="list-group-item">
                 <GoalItem {...itemProps}/>
             </li>
         );

@@ -2,14 +2,19 @@ import React from 'react';
 
 import GoalItem from './GoalItem';
 
-const GoalsList = () => {
-    const items = ['Do something', '???', 'Profit'];
+const GoalsList = ({ goalsData }) => {
+
+    const elements = goalsData.map((item) => {
+        return (
+            <li>
+                <GoalItem {...item}/>
+            </li>
+        )
+    });
 
     return (
       <ul>
-        <li><GoalItem text='Buy cheese' special /></li>
-        <li><GoalItem text='Buy tomatoes' special /></li>
-        <li><GoalItem text='Make pizza'  /></li>
+        {elements}
       </ul>
     );
   };

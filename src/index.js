@@ -6,12 +6,19 @@ import GoalsList from './componets/GoalsList';
 import SearchPanel from './componets/SearchPanel';
 
 const App = () => {
+
+  const goalsData = [
+    {text: 'Do something', special: false},
+    {text: '???', special: false},
+    {text: 'Profit', special: true}
+  ]
+
   return (
     <div>
       <span>{ (new Date()).toString() }</span>
       <AppHeader />
       <SearchPanel />
-      <GoalsList />
+      <GoalsList goalsData={goalsData} />
     </div>
   );
 }

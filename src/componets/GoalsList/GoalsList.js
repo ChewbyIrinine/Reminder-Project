@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GoalItem from './GoalItem';
+import GoalItem from '../GoalItem';
 import './GoalsList.css'
 
 const GoalsList = ({ goalsData }) => {

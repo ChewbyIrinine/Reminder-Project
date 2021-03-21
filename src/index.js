@@ -23,7 +23,10 @@ const App = () => {
         <SearchPanel />
         <ItemStatusFilter />
       </div>
-      <GoalsList goalsData={goalsData} />
+      <GoalsList
+        goalsData={goalsData}
+        onDeleted={(id) => console.log('Delete: ', id)}
+      />
     </div>
   );
 }

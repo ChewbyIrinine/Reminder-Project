@@ -3,24 +3,25 @@ import React from 'react';
 import GoalItem from '../GoalItem';
 import './GoalsList.css'
 
-const GoalsList = ({ goalsData }) => {
+const GoalsList = ({ goalsData, onDeleted }) => {
 
-    const elements = goalsData.map((item) => {
+  const elements = goalsData.map((item) => {
 
-        const {id, ...itemProps} = item;
-
-        return (
-            <li key = {id} className="list-group-item">
-                <GoalItem {...itemProps}/>
-            </li>
-        );
-    });
+    const { id, ...itemProps } = item;
 
     return (
-      <ul className="list-group goals-list">
-        {elements}
-      </ul>
+      <li key={id} className="list-group-item">
+        <GoalItem {...itemProps}
+          onDeleted={() => onDeleted(id)} />
+      </li>
     );
-  };
+  });
 
-  export default GoalsList;
+  return (
+    <ul className="list-group goals-list">
+      {elements}
+    </ul>
+  );
+};
+
+export default GoalsList;

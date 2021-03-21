@@ -14,15 +14,18 @@ export default class GoalItem extends Component {
     }
 
     onLabelClick = () => {
-        this.setState({
-            done: true
-
-        });
+        this.setState(({ done }) => {
+            return {
+                done: !done
+            }
+        })
     }
 
     onMarkSpecial = () => {
-        this.setState({
-            special: true
+        this.setState(({ special }) => {
+            return {
+                special: !special
+            }
         })
     }
 

@@ -9,40 +9,48 @@ export default class GoalItem extends Component {
     }
 
     state = {
-        done: false
+        done: false,
+        special: false
     }
 
     onLabelClick = () => {
         this.setState({
             done: true
+
         });
+    }
+
+    onMarkSpecial = () => {
+        this.setState({
+            special: true
+        })
     }
 
     render() {
 
-        const { text, special = false } = this.props;
-        const { done } = this.state;
+        const { text } = this.props;
+        const { done, special } = this.state;
 
         let classNames = 'goal-item';
+
         if (done) {
             classNames += ' done';
         }
 
-        const itemStyle = {
-            color: special ? 'steelblue' : 'black',
-            fontWeight: special ? 'bold' : 'normal'
-        };
+        if (special) {
+            classNames += ' special';
+        }
 
         return (
             <span className={classNames}>
                 <span className="goal-item-label"
-                    style={itemStyle}
                     onClick={this.onLabelClick}>
                     {text}
                 </span>
 
                 <button type="button"
-                    className="btn btn-outline-success btn-sm float-right">
+                    className="btn btn-outline-success btn-sm float-right"
+                    onClick={this.onMarkSpecial}>
                     <i className="fa fa-exclamation" />
                 </button>
 

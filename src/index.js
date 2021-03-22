@@ -5,10 +5,13 @@ import AppHeader from './componets/AppHeader';
 import GoalsList from './componets/GoalsList';
 import SearchPanel from './componets/SearchPanel';
 import ItemStatusFilter from './componets/ItemStatusFilter';
+import ItemAddForm from './componets/ItemAddForm'
 
 import './index.css';
 
 export default class App extends Component {
+
+  maxId = 100;
 
   state = {
     goalsData: [
@@ -21,7 +24,7 @@ export default class App extends Component {
   deleteItem = (id) => {
     this.setState(({ goalsData }) => {
       const idx = goalsData.findIndex((el) => el.id === id)
-      
+
       const newGoalsData = [
         ...goalsData.slice(0, idx),
         ...goalsData.slice(idx + 1)
@@ -35,6 +38,25 @@ export default class App extends Component {
     });
   };
 
+  addItem = (text) => {
+    
+    const newItem = {
+      text: text,
+      special: false,
+      id: this.maxId++
+    }
+
+    console.log(this.maxId);
+
+    this.setState(({goalsData}) => {
+      const newGoalsData = [...goalsData, newItem]
+
+      return {
+        goalsData: newGoalsData
+      }
+    })
+  }
+
   render() {
     return (
       <div className="goals-app" >
@@ -47,6 +69,7 @@ export default class App extends Component {
           goalsData={this.state.goalsData}
           onDeleted={this.deleteItem}
         />
+        <ItemAddForm onItemAdded={this.addItem} />
       </div>
     );
   }

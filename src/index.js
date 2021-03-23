@@ -56,25 +56,28 @@ export default class App extends Component {
         });
     };
 
+    toggleProperty(arr, id, propName) {
+        // 1. Update object
+        const idx = arr.findIndex((el) => el.id === id);
+        const newItem = { ...arr[idx], [propName]: !arr[idx][propName] };
+
+        // 2. Construct new array
+        return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
+    }
+
     onToggleSpecial = (id) => {
+        this.setState(({ goalsData }) => {
+            return {
+                goalsData: this.toggleProperty(goalsData, id, "special"),
+            };
+        });
         console.log("toggle special ", id);
     };
 
     onToggleDone = (id) => {
         this.setState(({ goalsData }) => {
-            // 1. Update object
-            const idx = goalsData.findIndex((el) => el.id === id);
-            const newItem = { ...goalsData[idx], done: !goalsData[idx].done };
-
-            // 2. Construct new array
-            const newArray = [
-                ...goalsData.slice(0, idx),
-                newItem,
-                ...goalsData.slice(idx + 1),
-            ];
-
             return {
-                goalsData: newArray,
+                goalsData: this.toggleProperty(goalsData, id, "done"),
             };
         });
 
@@ -82,15 +85,20 @@ export default class App extends Component {
     };
 
     render() {
+        const { goalsData } = this.state;
+
+        const doneCount = goalsData.filter((el) => el.done).length;
+        const toDoCount = goalsData.length - doneCount;
+
         return (
             <div className="goals-app">
-                <AppHeader toDo={12} done={30} />
+                <AppHeader toDo={toDoCount} done={doneCount} />
                 <div className="top-panel d-flex">
                     <SearchPanel />
                     <ItemStatusFilter />
                 </div>
                 <GoalsList
-                    goalsData={this.state.goalsData}
+                    goalsData={goalsData}
                     onDeleted={this.deleteItem}
                     onToggleSpecial={this.onToggleSpecial}
                     onToggleDone={this.onToggleDone}

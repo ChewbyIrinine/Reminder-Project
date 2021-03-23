@@ -39,7 +39,7 @@ export default class App extends Component {
   };
 
   addItem = (text) => {
-    
+
     const newItem = {
       text: text,
       special: false,
@@ -48,7 +48,7 @@ export default class App extends Component {
 
     console.log(this.maxId);
 
-    this.setState(({goalsData}) => {
+    this.setState(({ goalsData }) => {
       const newGoalsData = [...goalsData, newItem]
 
       return {
@@ -56,6 +56,14 @@ export default class App extends Component {
       }
     })
   }
+
+  onToggleSpecial = (id) => {
+    console.log('toggle special ', id)
+  };
+
+  onToggleDone = (id) => {
+    console.log('toggle done ', id)
+  };
 
   render() {
     return (
@@ -68,6 +76,8 @@ export default class App extends Component {
         <GoalsList
           goalsData={this.state.goalsData}
           onDeleted={this.deleteItem}
+          onToggleSpecial={this.onToggleSpecial}
+          onToggleDone={this.onToggleDone}
         />
         <ItemAddForm onItemAdded={this.addItem} />
       </div>

@@ -1,68 +1,50 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import './GoalItem.css'
+import "./GoalItem.css";
 
 export default class GoalItem extends Component {
-
-    constructor() {
-        super();
-    }
-
-    state = {
-        done: false,
-        special: false
-    }
-
-    onLabelClick = () => {
-        this.setState(({ done }) => {
-            return {
-                done: !done
-            }
-        })
-    }
-
-    onMarkSpecial = () => {
-        this.setState(({ special }) => {
-            return {
-                special: !special
-            }
-        })
-    }
-
     render() {
+        const {
+            text,
+            onDeleted,
+            onToggleSpecial,
+            onToggleDone,
+            special,
+            done,
+        } = this.props;
 
-        const { text, onDeleted } = this.props;
-        const { done, special } = this.state;
-
-        let classNames = 'goal-item';
+        let classNames = "goal-item";
 
         if (done) {
-            classNames += ' done';
+            classNames += " done";
         }
 
         if (special) {
-            classNames += ' special';
+            classNames += " special";
         }
 
         return (
             <span className={classNames}>
-                <span className="goal-item-label"
-                    onClick={this.onLabelClick}>
+                <span className="goal-item-label" onClick={onToggleDone}>
                     {text}
                 </span>
 
-                <button type="button"
+                <button
+                    type="button"
                     className="btn btn-outline-success btn-sm float-right"
-                    onClick={this.onMarkSpecial}>
+                    onClick={onToggleSpecial}
+                >
                     <i className="fa fa-exclamation" />
                 </button>
 
-                <button type="button"
+                <button
+                    type="button"
                     className="btn btn-outline-danger btn-sm float-right"
-                    onClick={onDeleted}>
+                    onClick={onDeleted}
+                >
                     <i className="fa fa-trash-o" />
                 </button>
             </span>
         );
-    };
-};
+    }
+}

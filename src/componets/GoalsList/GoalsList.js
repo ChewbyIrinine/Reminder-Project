@@ -3,7 +3,11 @@ import React from 'react';
 import GoalItem from '../GoalItem';
 import './GoalsList.css'
 
-const GoalsList = ({ goalsData, onDeleted }) => {
+const GoalsList = ({
+  goalsData,
+  onDeleted,
+  onToggleSpecial,
+  onToggleDone }) => {
 
   const elements = goalsData.map((item) => {
 
@@ -12,7 +16,9 @@ const GoalsList = ({ goalsData, onDeleted }) => {
     return (
       <li key={id} className="list-group-item">
         <GoalItem {...itemProps}
-          onDeleted={() => onDeleted(id)} />
+          onDeleted={() => onDeleted(id)}
+          onToggleSpecial={() => onToggleSpecial(id)}
+          onToggleDone={() => onToggleDone(id)} />
       </li>
     );
   });

@@ -10,103 +10,120 @@ import ItemAddForm from "./componets/ItemAddForm";
 import "./index.css";
 
 export default class App extends Component {
-    maxId = 100;
+	maxId = 100;
 
-    state = {
-        goalsData: [
-            this.createGoalItem("Do something"),
-            this.createGoalItem("???"),
-            this.createGoalItem("Profit"),
-        ],
-    };
+	state = {
+		goalsData: [
+			this.createGoalItem("Do something"),
+			this.createGoalItem("???"),
+			this.createGoalItem("Profit"),
+		],
+		term: "",
+	};
 
-    createGoalItem(text) {
-        return {
-            text,
-            special: false,
-            done: false,
-            id: this.maxId++,
-        };
-    }
+	createGoalItem(text) {
+		return {
+			text,
+			special: false,
+			done: false,
+			id: this.maxId++,
+		};
+	}
 
-    deleteItem = (id) => {
-        this.setState(({ goalsData }) => {
-            const idx = goalsData.findIndex((el) => el.id === id);
+	deleteItem = (id) => {
+		this.setState(({ goalsData }) => {
+			const idx = goalsData.findIndex((el) => el.id === id);
 
-            const newGoalsData = [
-                ...goalsData.slice(0, idx),
-                ...goalsData.slice(idx + 1),
-            ];
+			const newGoalsData = [
+				...goalsData.slice(0, idx),
+				...goalsData.slice(idx + 1),
+			];
 
-            console.log(newGoalsData);
+			console.log(newGoalsData);
 
-            return {
-                goalsData: newGoalsData,
-            };
-        });
-    };
+			return {
+				goalsData: newGoalsData,
+			};
+		});
+	};
 
-    addItem = (text) => {
-        this.setState(({ goalsData }) => {
-            const newGoalsData = [...goalsData, this.createGoalItem(text)];
+	addItem = (text) => {
+		this.setState(({ goalsData }) => {
+			const newGoalsData = [...goalsData, this.createGoalItem(text)];
 
-            return {
-                goalsData: newGoalsData,
-            };
-        });
-    };
+			return {
+				goalsData: newGoalsData,
+			};
+		});
+	};
 
-    toggleProperty(arr, id, propName) {
-        // 1. Update object
-        const idx = arr.findIndex((el) => el.id === id);
-        const newItem = { ...arr[idx], [propName]: !arr[idx][propName] };
+	toggleProperty(arr, id, propName) {
+		// 1. Update object
+		const idx = arr.findIndex((el) => el.id === id);
+		const newItem = { ...arr[idx], [propName]: !arr[idx][propName] };
 
-        // 2. Construct new array
-        return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
-    }
+		// 2. Construct new array
+		return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
+	}
 
-    onToggleSpecial = (id) => {
-        this.setState(({ goalsData }) => {
-            return {
-                goalsData: this.toggleProperty(goalsData, id, "special"),
-            };
-        });
-        console.log("toggle special ", id);
-    };
+	onToggleSpecial = (id) => {
+		this.setState(({ goalsData }) => {
+			return {
+				goalsData: this.toggleProperty(goalsData, id, "special"),
+			};
+		});
+		console.log("toggle special ", id);
+	};
 
-    onToggleDone = (id) => {
-        this.setState(({ goalsData }) => {
-            return {
-                goalsData: this.toggleProperty(goalsData, id, "done"),
-            };
-        });
+	onToggleDone = (id) => {
+		this.setState(({ goalsData }) => {
+			return {
+				goalsData: this.toggleProperty(goalsData, id, "done"),
+			};
+		});
 
-        console.log("toggle done ", id);
-    };
+		console.log("toggle done ", id);
+	};
 
-    render() {
-        const { goalsData } = this.state;
+	search(items, term) {
+		if (term === 0) {
+			return items;
+		}
 
-        const doneCount = goalsData.filter((el) => el.done).length;
-        const toDoCount = goalsData.length - doneCount;
+		return items.filter((el) => {
+			return el.text.toLowerCase().indexOf(term.toLowerCase()) > -1;
+		});
+	}
 
-        return (
-            <div className="goals-app">
-                <AppHeader toDo={toDoCount} done={doneCount} />
-                <div className="top-panel d-flex">
-                    <SearchPanel />
-                    <ItemStatusFilter />
-                </div>
-                <GoalsList
-                    goalsData={goalsData}
-                    onDeleted={this.deleteItem}
-                    onToggleSpecial={this.onToggleSpecial}
-                    onToggleDone={this.onToggleDone}
-                />
-                <ItemAddForm onItemAdded={this.addItem} />
-            </div>
-        );
-    }
+	onSearchChange = (term) => {
+		this.setState({ term });
+	};
+
+	render() {
+		const { goalsData, term } = this.state;
+
+		const visibleItems = this.search(goalsData, term);
+
+		const doneCount = goalsData.filter((el) => el.done).length;
+		const toDoCount = goalsData.length - doneCount;
+
+		return (
+			<div className="goals-app">
+				<AppHeader toDo={toDoCount} done={doneCount} />
+				<div className="top-panel d-flex">
+					<SearchPanel onSearchChange={this.onSearchChange} />
+					<ItemStatusFilter />
+				</div>
+				<GoalsList
+					goalsData={visibleItems}
+					onDeleted={this.deleteItem}
+					onToggleSpecial={this.onToggleSpecial}
+					onToggleDone={this.onToggleDone}
+				/>
+				<ItemAddForm onItemAdded={this.addItem} />
+			</div>
+		);
+	}
 }
 
 ReactDom.render(<App />, document.getElementById("root"));

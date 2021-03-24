@@ -1,7 +1,11 @@
 .item-add-form {
-    margin-top: 10px;
+	margin-top: 10px;
 }
 
-.item-add-form .btn {
-    width: 100%;
+.item-add-form input {
+	margin-right: 3px;
+}
+
+.item-add-form button {
+	white-space: nowrap;
 }

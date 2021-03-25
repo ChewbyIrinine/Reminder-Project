@@ -19,6 +19,7 @@ export default class App extends Component {
 			this.createGoalItem("Profit"),
 		],
 		term: "",
+		filter: "active", // all, active, done
 	};
 
 	createGoalItem(text) {
@@ -99,10 +100,27 @@ export default class App extends Component {
 		this.setState({ term });
 	};
 
-	render() {
-		const { goalsData, term } = this.state;
+	filter(items, filter) {
+		switch (filter) {
+			case "all":
+				return items;
+			case "active":
+				return items.filter((el) => !el.done);
+			case "done":
+				return items.filter((el) => el.done);
+			default:
+				return items;
+		}
+	}
 
-		const visibleItems = this.search(goalsData, term);
+	onFilterChange = (filter) => {
+		this.setState({ filter });
+	};
+
+	render() {
+		const { goalsData, term, filter } = this.state;
+
+		const visibleItems = this.filter(this.search(goalsData, term), filter);
 
 		const doneCount = goalsData.filter((el) => el.done).length;
 		const toDoCount = goalsData.length - doneCount;
@@ -112,7 +130,10 @@ export default class App extends Component {
 				<AppHeader toDo={toDoCount} done={doneCount} />
 				<div className="top-panel d-flex">
 					<SearchPanel onSearchChange={this.onSearchChange} />
-					<ItemStatusFilter />
+					<ItemStatusFilter
+						filter={filter}
+						onFilterChange={this.onFilterChange}
+					/>
 				</div>
 				<GoalsList
 					goalsData={visibleItems}

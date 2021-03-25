@@ -1,24 +1,24 @@
 .goal-item {
-    font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 .goal-item button {
-    width: 35px;
-    margin: 3px;
+	width: 35px;
+	margin: 3px;
 }
 
 .goal-item-label {
-    margin-left: 1.25rem;
-    line-height: 35px;
-    cursor: pointer;
-    user-select: none;
+	margin-left: 1.25rem;
+	line-height: 35px;
+	cursor: pointer;
+	user-select: none;
 }
 
 .goal-item.done .goal-item-label {
-    text-decoration: line-through;
+	text-decoration: line-through;
 }
 
 .goal-item.special .goal-item-label {
-    font-weight: bold;
-    color: steelblue;
+	font-weight: bold;
+	color: steelblue;
 }

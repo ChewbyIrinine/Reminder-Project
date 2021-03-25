@@ -1,3 +1,3 @@
-import GoalItem from './GoalItem';
+import GoalItem from "./GoalItem";
 
 export default GoalItem;

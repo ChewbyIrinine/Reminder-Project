@@ -1,33 +1,25 @@
-import React from 'react';
+import React from "react";
 
-import GoalItem from '../GoalItem';
-import './GoalsList.css'
+import GoalItem from "../GoalItem";
+import "./GoalsList.css";
 
-const GoalsList = ({
-  goalsData,
-  onDeleted,
-  onToggleSpecial,
-  onToggleDone }) => {
+const GoalsList = ({ goalsData, onDeleted, onToggleSpecial, onToggleDone }) => {
+	const elements = goalsData.map((item) => {
+		const { id, ...itemProps } = item;
 
-  const elements = goalsData.map((item) => {
+		return (
+			<li key={id} className="list-group-item">
+				<GoalItem
+					{...itemProps}
+					onDeleted={() => onDeleted(id)}
+					onToggleSpecial={() => onToggleSpecial(id)}
+					onToggleDone={() => onToggleDone(id)}
+				/>{" "}
+			</li>
+		);
+	});
 
-    const { id, ...itemProps } = item;
-
-    return (
-      <li key={id} className="list-group-item">
-        <GoalItem {...itemProps}
-          onDeleted={() => onDeleted(id)}
-          onToggleSpecial={() => onToggleSpecial(id)}
-          onToggleDone={() => onToggleDone(id)} />
-      </li>
-    );
-  });
-
-  return (
-    <ul className="list-group goals-list">
-      {elements}
-    </ul>
-  );
+	return <ul className="list-group goals-list"> {elements} </ul>;
 };
 
 export default GoalsList;
